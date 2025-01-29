@@ -1,0 +1,11 @@
+dist-newstyle/
+dist-newstyle
+
+
+bash-scripts/variables-private.sh
+bash-scripts/metadata.json
+bash-scripts/ppbl-nft.json
+
+bash-scripts/metadata/
+bash-scripts/faucet-mini-project/project-variables-private.sh
+.vscode
