@@ -1,0 +1,133 @@
+1. Generate Address: 
+
+    cardano-cli address build \
+    --payment-script-file guessingGame.plutus \
+    --out-file script.addr --testnet-magic 1
+    
+    
+
+2. Create payment.vkey and payment.skey: 
+
+    cardano-cli address key-gen \
+    --verification-key-file payment.vkey \
+    --signing-key-file payment.skey
+    
+    
+    
+3. Create Payment.addr: 
+
+    cardano-cli address build \
+    --payment-verification-key-file payment.vkey \
+    --out-file payment.addr --testnet-magic 1
+    
+
+4. Submit the the transaction to lock the funds:
+
+Change /home/username
+
+cardano-cli conway transaction build \
+  --tx-in $(cardano-cli query utxo --address $(< payment.addr) --testnet-magic 1 --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket --output-json | jq -r 'keys[0]') \
+  --tx-out $(< script.addr)+10000000 \
+  --tx-out-inline-datum-file datum.json \
+  --change-address $(< payment.addr) \
+  --out-file lock.tx \
+  --testnet-magic 1 \
+  --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket
+
+
+
+5. Sign the transaction with the payment.skey:
+
+cardano-cli conway transaction sign \
+   --tx-file lock.tx \
+   --signing-key-file payment.skey \
+   --out-file lock.tx.signed
+
+
+6. Submit the transaction:
+	
+cardano-cli conway transaction submit \
+  --tx-file lock.tx.signed \
+  --testnet-magic 1 \
+  --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket
+
+
+7. View:
+cardano-cli query utxo \
+  --address $(< script.addr) \
+  --testnet-magic 1 \
+  --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket \
+  --output-json
+
+
+8. Test:  
+
+
+cardano-cli conway transaction build \
+  --tx-in $(cardano-cli query utxo --address $(< script.addr) --testnet-magic 1 --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket --output-json | jq -r 'keys[0]') \
+  --tx-in-collateral $(cardano-cli conway query utxo --address $(< payment.addr) --testnet-magic 1 --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket --output-json | jq -r 'keys[0]') \
+  --tx-in-script-file contract.plutus \
+  --tx-in-inline-datum-present \
+  --tx-in-redeemer-value 200 \
+  --change-address $(< payment.addr) \
+  --out-file unlock.tx \
+  --testnet-magic 1 \
+  --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket
+
+
+for redeemer file ->
+cardano-cli conway transaction build \
+  --tx-in $(cardano-cli query utxo --address $(< script.addr) --testnet-magic 1 --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket --output-json | jq -r 'keys[0]') \
+  --tx-in-collateral $(cardano-cli conway query utxo --address $(< payment.addr) --testnet-magic 1 --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket --output-json | jq -r 'keys[0]') \
+  --tx-in-script-file contract.plutus \
+  --tx-in-inline-datum-present \
+  --tx-in-redeemer-file redeemer.json \
+  --change-address $(< payment.addr) \
+  --out-file unlock.tx \
+  --testnet-magic 1 \
+  --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket
+Estimated transaction fee: 299681 Lovelace
+
+
+9. This time, the node validated the transaction and successfully ran the script. The transaction should succeed if we provide the correct witness for the collateral. Let's do that:
+
+cardano-cli conway transaction sign \
+--tx-file unlock.tx \
+--signing-key-file payment.skey \
+--out-file unlock.tx.signed 
+
+
+
+10. Transaction successfully submitted:
+
+cardano-cli conway transaction submit \
+  --tx-file unlock.tx.signed \
+  --testnet-magic 1 \
+  --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket
+  
+  
+  
+  
+11. cardano-cli conway transaction txid --tx-file unlock.tx.signed 
+
+
+
+12. cardano-cli query utxo \
+  --address $(< script.addr) \
+  --testnet-magic 1 \
+  --socket-path /home/sumit-bera/git/cardano-node/preprod/db/node.socket
+  
+  
+  
+
+13. cardano-cli query utxo \
+  --address $(< payment.addr) \
+  --testnet-magic 1 \
+  --socket-path /home/souvagya/git/cardano-node/preprod/db/node.socket
+
+---------------------------------------------------------------------------------------------------
+-- To generate the public key hash (PubKeyHash), you use the cardano-cli to hash the public key: --
+---------------------------------------------------------------------------------------------------
+cardano-cli address key-hash \
+    --payment-verification-key-file payment.vkey \
+    --out-file payment.pkh
