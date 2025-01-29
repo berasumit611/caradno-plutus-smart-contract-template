@@ -1,0 +1,11 @@
+{
+    "161803398875": {
+        "contractAddress": "addr_test1wrfjp0t656rpm8wq67mh5zy7kjhw7qz82l82xjka2lzmlacjn0aeg",
+        "policyId": "a4af431031b91e9130aa6b920c3b8b5c18befeb79e9e16d473205396",
+        "tokenName": "tScaffold",
+        "withdrawalAmount": 100,
+        "refUTxOHash": "4dd9ed21500f44da9b8e520be3f158a97672a904f0dab7a17b2eccba05a6a350",
+        "refUTxOIx": 0,
+        "aboutToken": ["an impermanent scaffold"]
+    }
+}

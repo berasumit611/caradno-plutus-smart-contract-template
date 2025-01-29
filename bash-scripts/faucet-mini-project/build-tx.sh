@@ -1,0 +1,18 @@
+cardano-cli transaction build \
+--babbage-era \
+--testnet-magic 1 \
+--tx-in 2d10bfa367b5fcd68743ac7b45c4b200923d14c670b5bf23decfa8e823eab5a9#2 \
+--tx-in-collateral 2d10bfa367b5fcd68743ac7b45c4b200923d14c670b5bf23decfa8e823eab5a9#2 \
+--tx-in d5d02773c516f304ebb100c57c9a978e29acf8f1809818b8b75ab51973efd726#0 \
+--tx-in 2d10bfa367b5fcd68743ac7b45c4b200923d14c670b5bf23decfa8e823eab5a9#0 \
+--spending-tx-in-reference 4dd9ed21500f44da9b8e520be3f158a97672a904f0dab7a17b2eccba05a6a350#0 \
+--spending-plutus-script-v2 \
+--spending-reference-tx-in-inline-datum-present \
+--spending-reference-tx-in-redeemer-file faucet-redeemer.json \
+--tx-out addr_test1wrfjp0t656rpm8wq67mh5zy7kjhw7qz82l82xjka2lzmlacjn0aeg+"2000000 + 49900 a4af431031b91e9130aa6b920c3b8b5c18befeb79e9e16d473205396.7453636166666f6c64" \
+--tx-out-inline-datum-file faucet-datum.json \
+--tx-out addr_test1qqnpvxraq6yemgn0ulk2a2nhce4w73r3c7qnjwpzgys8nqge36xrt9hqx3rdnz276wnptq62ylzdntq56hg2umm3a4eq3hljlj+"2000000 + 100 a4af431031b91e9130aa6b920c3b8b5c18befeb79e9e16d473205396.7453636166666f6c64" \
+--tx-out addr_test1qqnpvxraq6yemgn0ulk2a2nhce4w73r3c7qnjwpzgys8nqge36xrt9hqx3rdnz276wnptq62ylzdntq56hg2umm3a4eq3hljlj+"2000000 + 1 05cf1f9c1e4cdcb6702ed2c978d55beff5e178b206b4ec7935d5e056.3232325050424c3230323344656d6f4765726f6c616d6f" \
+--change-address addr_test1qqnpvxraq6yemgn0ulk2a2nhce4w73r3c7qnjwpzgys8nqge36xrt9hqx3rdnz276wnptq62ylzdntq56hg2umm3a4eq3hljlj \
+--protocol-params-file protocol.json \
+--out-file open-a-faucet-tx.draft
