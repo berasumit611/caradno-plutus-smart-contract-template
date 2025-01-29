@@ -1,0 +1,5 @@
+{
+    "type": "Unwitnessed Tx ConwayEra",
+    "description": "Ledger Cddl Format",
+    "cborHex": "84a300d9010281825820947108b5437e02e41a5a682723f59c88803cfd6ac176f8164ddfaad1463bab3d010182a300581d70affe1adcbd127a80f415acda89d2984058fc071b3def462785d6b5e5011a004c4b40028201d8185822d8799f581cbb1ae4ff2eac26b711aacb7b20e25e7cd1fa48f2adaa2eaece01de4bff82581d60bb1ae4ff2eac26b711aacb7b20e25e7cd1fa48f2adaa2eaece01de4b1a00470fde021a0002a071a0f5f6"
+}
